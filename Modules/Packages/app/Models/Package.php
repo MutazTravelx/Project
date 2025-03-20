@@ -4,6 +4,8 @@ namespace Modules\Packages\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Packages\Database\Factories\PackageFactory;
+
 // use Modules\Packages\Database\Factories\PackageFactory;
 
 class Package extends Model
@@ -23,8 +25,8 @@ class Package extends Model
             'images' => 'array',
         ];
     }
-    // protected static function newFactory(): PackageFactory
-    // {
-    //     // return PackageFactory::new();
-    // }
+    protected static function newFactory()
+    {
+        return PackageFactory::new();
+    }
 }

@@ -24,6 +24,6 @@ class Packages extends Cluster
 
     public static function getNavigationIcon(): ?string
     {
-        return 'heroicon-o-squares-2x2';
+        return 'heroicon-o-briefcase';
     }
 }

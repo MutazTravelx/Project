@@ -14,6 +14,10 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -24,7 +28,7 @@ class PackageResource extends Resource
 {
     protected static ?string $model = Package::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
     protected static ?string $cluster = Packages::class;
 
@@ -106,7 +110,7 @@ class PackageResource extends Resource
                 
             TextColumn::make('price1')
                 ->label('Price 1')
-                ->money('usd') // أو استخدم طريقة العرض المناسبة للسعر
+                ->money('usd')
                 ->sortable(),
                 
             TextColumn::make('created_at')
@@ -115,10 +119,40 @@ class PackageResource extends Resource
                 ->sortable(),
             ])
             ->filters([
-                //
+                Filter::make('destination')
+                ->form([
+                    TextInput::make('destination')
+                        ->label('Destination'),
+                ])
+                ->query(function ($query, array $data) {
+                    if ($data['destination']) {
+                        $query->where('destination', 'like', "%{$data['destination']}%");
+                    }
+                }),
+            Filter::make('price_range')
+                ->form([
+                    TextInput::make('min_price')
+                        ->label('Min Price')
+                        ->numeric(),
+                    TextInput::make('max_price')
+                        ->label('Max Price')
+                        ->numeric(),
+                ])
+                ->query(function ($query, array $data) {
+                    if ($data['min_price']) {
+                        $query->where('price1', '>=', $data['min_price']);
+                    }
+                    if ($data['max_price']) {
+                        $query->where('price1', '<=', $data['max_price']);
+                    }
+                }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
