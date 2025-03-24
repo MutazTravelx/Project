@@ -1,18 +1,33 @@
 {
-    "name": "nwidart/packages",
+    "name": "travelx24/packages-module",
     "description": "",
+    "type": "laravel-module",
+    "version": "1.0.0",
     "authors": [
         {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
+            "name": "Mutaz Asem",
+            "email": "mu@gmail.com"
         }
     ],
+    "require": {
+        "php": "^8.0",
+        "coolsam/modules": "^4.2",
+        "filament/filament": "3.3",
+        "livewire/livewire": "3.5.12",
+        "nwidart/laravel-modules": "*"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "pestphp/pest": "^3.7",
+        "pestphp/pest-plugin-laravel": "^3.1",
+        "pestphp/pest-plugin-livewire": "^3.0",
+        "phpunit/phpunit": "^11.5.3",
+        "spatie/laravel-ignition": "^2.4"
+    },
     "extra": {
         "laravel": {
             "providers": [],
-            "aliases": {
-
-            }
+            "aliases": {}
         }
     },
     "autoload": {

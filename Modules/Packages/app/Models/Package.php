@@ -4,6 +4,7 @@ namespace Modules\Packages\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Packages\Database\Factories\PackageFactory;
 
 // use Modules\Packages\Database\Factories\PackageFactory;
@@ -16,8 +17,13 @@ class Package extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'name','images','description','destination','duration','price1','price2','price3','price4','time',
+        'name','images','description','destination','duration','time',
     ];
+
+    public function price ():HasMany    
+    {
+        return $this->hasMany(Price::class,'package_id');
+    }    
 
     protected function casts(): array
     {
