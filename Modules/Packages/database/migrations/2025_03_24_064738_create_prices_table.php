@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('number_of_people');
             $table->string('price');
             $table->timestamps();
-            $table->foreign('package_id')->references('id')->on('packages');
+            $table->foreign('package_id')->references('id')->on('packages')->onDelete('cascade');
         });
     }
 

@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
@@ -21,6 +22,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -46,11 +48,14 @@ class PackageResource extends Resource
                                 ->label('Package Name')
                                 ->required(),
 
-                            FileUpload::make('images')
+                            SpatieMediaLibraryFileUpload::make('images')
                                 ->label('Package Images')
                                 ->multiple()
                                 ->image()
-                                ->directory('packages'),
+                                // ->disk('packages')
+                                // ->collection('packages')
+                                // ->directory('packages')
+                                ,
 
                             Textarea::make('description')
                                 ->label('Description')
@@ -71,7 +76,7 @@ class PackageResource extends Resource
                     Step::make('Prices')
                         ->schema([
                             Repeater::make('price')
-                                ->relationship()
+                                ->relationship('price')
                                 ->schema([
                                     TextInput::make('number_of_people')
                                         ->label('Number of People')
@@ -107,6 +112,8 @@ class PackageResource extends Resource
                     ->label('Duration')
                     ->sortable(),
 
+                SpatieMediaLibraryImageColumn::make('images')
+                    ->label('Images'),
                 // TextColumn::make('price1')
                 //     ->label('Price 1')
                 //     ->money('usd')
